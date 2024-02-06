@@ -18,12 +18,12 @@ func main() {
 }
 
 func worker(ctx context.Context, wg *sync.WaitGroup) {
+	defer wg.Done()
 	log.Println("начинаю работу")
 	for {
 		select {
 		case <-ctx.Done():
 			log.Println("заканчиваю работу")
-			wg.Done()
 			return
 		default:
 			//work ...

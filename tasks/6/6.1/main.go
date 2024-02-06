@@ -20,12 +20,12 @@ func main() {
 }
 
 func worker(done chan struct{}, wg *sync.WaitGroup) {
+	defer wg.Done()
 	log.Println("начинаю работу")
 	for {
 		select {
 		case <-done:
 			log.Println("заканчиваю работу")
-			wg.Done()
 			return
 		default:
 			//work ...

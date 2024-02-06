@@ -47,12 +47,12 @@ func main() {
 }
 
 func worker(ctx context.Context, wg *sync.WaitGroup, ch <-chan int) {
+	defer wg.Done()
 	log.Println("worker[1] запущен")
 	for {
 		select {
 		case <-ctx.Done():
 			log.Println("worker[1] завершился")
-			wg.Done()
 			return
 		default:
 			out, ok := <-ch

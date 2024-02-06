@@ -24,11 +24,11 @@ func main() {
 }
 
 func worker(done *bool, wg *sync.WaitGroup) {
+	defer wg.Done()
 	log.Println("начинаю работу")
 	for {
 		if *done {
 			log.Println("заканчиваю работу")
-			wg.Done()
 			return
 		}
 		//work ...

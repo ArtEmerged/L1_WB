@@ -12,12 +12,12 @@ import (
 )
 
 func worker(wg *sync.WaitGroup, ch <-chan int, numW int) {
+	defer wg.Done()
 	log.Printf("worker[%d] запущен\n", numW)
 	for {
 		out, ok := <-ch
 		if !ok {
 			log.Printf("worker[%d] завершился\n", numW)
-			wg.Done()
 			return
 		}
 		fmt.Printf("worker[%d] выводит %d\n", numW, out)
