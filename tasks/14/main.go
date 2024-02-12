@@ -5,8 +5,24 @@ import (
 	"reflect"
 )
 
+/*
+	Разработать программу, которая в рантайме способна определить тип переменной: int, string, bool, channel из переменной типа interface{}.
+*/
+
 func determinesTheTypeRuntime(value interface{}) {
-	switch reflect.TypeOf(value).Kind() {
+	/*
+		Благодаря функции TypeOf из библиотеки reflect мы можем определить тип переменной во время выполнения, а не во время компиляции.
+		Если interface == nil, то TypeOf возвращает nil
+	*/
+	refType := reflect.TypeOf(value)
+
+	// Если применить метод Kind() к nil, то мы получим панику (invalid memory address or nil pointer dereference)
+	if refType == nil {
+		return
+	}
+
+	//	Используя метод Kind(), мы можем получить базовый тип переменной
+	switch refType.Kind() {
 	case reflect.Int:
 		fmt.Println("It's Int:", reflect.TypeOf(value))
 	case reflect.String:
@@ -25,8 +41,10 @@ func main() {
 		ch chan int
 		b  bool
 	)
+
 	determinesTheTypeRuntime(i)
 	determinesTheTypeRuntime(s)
 	determinesTheTypeRuntime(ch)
 	determinesTheTypeRuntime(b)
+	determinesTheTypeRuntime(nil)
 }
