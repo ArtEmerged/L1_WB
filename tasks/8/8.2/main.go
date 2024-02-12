@@ -2,16 +2,26 @@ package main
 
 import "fmt"
 
+/*
+	Дана переменная int64. Разработать программу которая устанавливает i-й бит в 1 или 0.
+*/
+
 func main() {
 	fmt.Printf("Введите через пробел чисто(int64) и индек бита(i) от 0 до 63\nПример:42 53 \nВвод:")
 	var numb, index int64
-	fmt.Scanf("%d %d", &numb, &index)
+	_, err := fmt.Scanf("%d %d", &numb, &index)
+	// Проверяем ввод на валидность
+	if err != nil {
+		fmt.Println("Невалидные данные")
+		return
+	}
 
+	// Проверяем индекс на валидность
 	if index > 63 || index < 0 {
 		fmt.Println("Невалидный индекс")
 		return
 	}
-	
+
 	fmt.Printf("%064b\n", uint64(numb))
 	numb = inverseBit(numb, index)
 	fmt.Printf("%064b\n", uint64(numb))
