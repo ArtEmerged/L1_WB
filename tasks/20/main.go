@@ -5,28 +5,50 @@ import (
 	"os"
 )
 
+/*
+	Разработать программу, которая переворачивает слова в строке.
+	Пример: «snow dog sun — sun dog snow».
+*/
+
 func main() {
 	arg := os.Args[1:]
+
+	// Проверяем наличие аргумента
 	if len(arg) != 1 {
 		fmt.Println("incorrect input")
 		return
 	}
 
+	// Получаем строку из аргумента
 	words := string(arg[0])
+
+	// Если нам передали пустой аргумент, завершаем выполнение программы.
+	// Защита от случая go run main.go ""
 	if len(words) == 0 {
 		return
 	}
-	var newWords string
-	if len(words) > 1 {
-		words += " "
-		var begW int
 
-		for i := range words {
-			if words[i] == ' ' {
-				newWords = " " + words[begW:i] + newWords
-				begW = i + 1
-			}
+	// Инициализируем переменную для хранения перевёрнутых слов
+	var newWords string
+
+	// Добавляем пробел в конец строки, чтобы обработать последнее слово
+	words += " "
+
+	// Инициализируем переменную для хранения начала текущего слова
+	var begW int
+
+	// Проходим по строке
+	for i := range words {
+
+		// Если встретили пробел, обрабатываем слово
+		if words[i] == ' ' {
+			// Добавляем перевёрнутое слово к новой строке
+			newWords = " " + words[begW:i] + newWords
+			// Обновляем начало следующего слова
+			begW = i + 1
 		}
 	}
+
+	// newWords[1:] помогает нам убрать первый пробел
 	fmt.Printf("|%s| - |%s|\n", arg[0], newWords[1:])
 }
